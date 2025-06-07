@@ -1,5 +1,5 @@
 // ===== ALERT LOGIN BERHASIL =====
-(function() {
+(function () {
   const params = new URLSearchParams(window.location.search);
   const loginStatus = params.get('login');
 
@@ -75,3 +75,21 @@ function handleResponsiveSidebar() {
 
 handleResponsiveSidebar();
 window.addEventListener('resize', handleResponsiveSidebar);
+
+$(document).ready(function () {
+  const table = $('#data-santri').DataTable({
+    language: {
+      paginate: {
+        previous: "Sebelum",
+        next: "Selanjutnya"
+      }
+    }
+  });
+
+  const searchInput = $('#data-santri_filter label input');
+  if (!searchInput.siblings('.search-icon').length) {
+    searchInput.after('<img src="/assets/img/search-01.svg" alt="Search Icon" class="search-icon" />');
+  }
+});
+
+

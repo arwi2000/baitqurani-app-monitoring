@@ -1,5 +1,5 @@
 // ===== ALERT LOGIN BERHASIL =====
-(function() {
+(function () {
   const params = new URLSearchParams(window.location.search);
   const loginStatus = params.get('login');
 
@@ -75,3 +75,8 @@ function handleResponsiveSidebar() {
 
 handleResponsiveSidebar();
 window.addEventListener('resize', handleResponsiveSidebar);
+
+$(document).ready(function () {
+    $('#data-santri').DataTable();
+});
+

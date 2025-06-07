@@ -1,4 +1,6 @@
-/* Reset & Global */
+/* ===========================
+   Reset & Global Styles
+=========================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +14,9 @@ body {
   background-color: #CEF8CA;
 }
 
-/* Sidebar */
+/* ===========================
+   Sidebar Styles
+=========================== */
 .sidebar {
   width: 354px;
   background-color: #ffffff;
@@ -112,7 +116,9 @@ body {
   border-radius: 10px;
 }
 
-/* Dropdown */
+/* ===========================
+   Dropdown Menu Styles
+=========================== */
 .dropdown {
   position: relative;
 }
@@ -150,7 +156,9 @@ body {
   flex-direction: column;
 }
 
-/* Main content */
+/* ===========================
+   Main Content Area Styles
+=========================== */
 .main {
   margin-left: 354px;
   position: relative;
@@ -166,7 +174,9 @@ body {
   transition: margin-left 0.3s ease;
 }
 
-/* Header */
+/* ===========================
+   Header Styles
+=========================== */
 .header {
   position: relative;
   height: 300px;
@@ -222,14 +232,16 @@ body {
   z-index: 6;
 }
 
-/* Container utama di bawah header */
+/* ===========================
+   Main Container under Header
+=========================== */
 .header-main {
   position: relative;
   top: 100px;
   width: auto;
   height: 700px;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 5;
   padding: 20px;
@@ -238,48 +250,93 @@ body {
   max-width: 100%;
 }
 
-/* Konten utama */
-.visi,
-.misi,
-.program-unggulan {
-  position: relative;
-  top: 10px;
-  margin: 2px auto 25px auto;
+/* Simpan dan Tambah Btn */
+.simpan-data-btn,
+.tambah-data-btn {
+  background-color: #1C82F0;
+  color: white !important;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.simpan-data-btn:hover,
+.tambah-data-btn:hover {
+  background-color: #0059b8;
+}
+
+/* Style tombol pagination */
+.dataTables_wrapper .dataTables_paginate ul.pagination li.page-item a.page-link {
+  background-color: white;
+  color: black;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover */
+.dataTables_wrapper .dataTables_paginate ul.pagination li.page-item a.page-link:hover {
+  background-color: #0059b8;
+  color: white;
+}
+
+/* Tombol aktif */
+.dataTables_wrapper .dataTables_paginate ul.pagination li.page-item.active a.page-link {
+  background-color: #1C82F0;
+  color: white;
+  border: none;
+}
+
+
+/* Bungkus filter agar bisa dikontrol posisinya */
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+  /* posisikan ke kanan */
   width: 100%;
-  max-width: 100%;
-  border: 2px solid black;
-  border-radius: 12px;
-  padding: 5px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  box-sizing: border-box;
+  margin-bottom: 1rem;
+  overflow-x: auto;
 }
 
-.visi h1,
-.misi h1,
-.program-unggulan h1 {
-  font-size: 25px;
-  /* Default heading size */
-  color: black;
+/* Gaya label (input + logo) */
+.dataTables_filter {
+  display: flex;
+  justify-content: flex-end;
+  width: auto;
+}
+
+/* Supaya input + gambar sejajar dan tidak melebar */
+.dataTables_filter label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  /* mencegah pecah baris */
+}
+
+/* Logo search */
+.dataTables_filter .search-icon {
+  width: 35px;
+  height: auto;
+  background-color: #1C82F0;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+#data-santri thead th,
+#data-santri tbody td {
   text-align: center;
+  vertical-align: middle;
 }
 
-.visi p {
-  font-size: 21px;
-  /* Default paragraph size */
-  text-align: center;
+.modal-content {
   color: black;
 }
 
-.misi p,
-.program-unggulan p {
-  font-size: 21px;
-  /* Default paragraph size */
-  text-align: justify;
-  color: black;
-}
-
-/* Overlay */
+/* ===========================
+   Overlay Styles
+=========================== */
 .overlay {
   position: fixed;
   top: 0;
@@ -296,7 +353,111 @@ body {
   display: block;
 }
 
-/* Responsive styles */
+/* ===========================
+   DataTables Text Color Overrides
+=========================== */
+.dataTables_length label,
+.dataTables_length select {
+  color: black !important;
+}
+
+.dataTables_filter label,
+.dataTables_filter input {
+  color: black !important;
+}
+
+.dropdown-column {
+  display: flex;
+  gap: 20px;           /* Jarak antar elemen */
+  align-items: center; /* Rata vertikal */
+  margin-bottom: 20px;
+}
+
+.pilih-hafalan .form-select {
+  width: 200px;
+  height: 50px;
+  padding: 8px 12px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  /* border warna abu-abu supaya pas */
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #FF7700;
+  /* background putih */
+  color: white;
+  /* teks hitam supaya kontras */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.pilih-hafalan .form-select:hover {
+  background-color: #cf6100;
+  /* sedikit abu-abu saat hover */
+
+}
+
+.pilih-bulan .form-select {
+  width: 200px;
+  height: 50px;
+  padding: 8px 12px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  /* border warna abu-abu supaya pas */
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 20px;
+  background-color: #1C82F0;
+  /* background putih */
+  color: white;
+  /* teks hitam supaya kontras */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.pilih-bulan .form-select:hover {
+  background-color: #005dc0;
+  /* sedikit abu-abu saat hover */
+}
+
+.btn-export-data {
+  width: 200px;
+  height: 50px;
+  padding: 8px 12px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: -5px; /* supaya sejajar vertikal */
+  background-color: #1C82F0;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  display: flex;          /* supaya teks tombol rata tengah vertikal & horizontal */
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-export-data:hover {
+  background-color: #0059b8;
+}
+
+
+/* ===========================
+   Responsive Styles
+=========================== */
+
+/* For screens <= 1024px */
 @media (max-width: 1024px) {
   .sidebar h2 {
     font-size: 28px;
@@ -327,6 +488,7 @@ body {
   }
 }
 
+/* For screens <= 768px */
 @media (max-width: 768px) {
   .sidebar {
     width: 250px;
@@ -373,6 +535,7 @@ body {
   }
 }
 
+/* For screens <= 480px */
 @media (max-width: 480px) {
   .sidebar {
     width: 250px;

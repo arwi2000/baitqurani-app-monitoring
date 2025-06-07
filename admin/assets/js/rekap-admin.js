@@ -75,3 +75,11 @@ function handleResponsiveSidebar() {
 
 handleResponsiveSidebar();
 window.addEventListener('resize', handleResponsiveSidebar);
+
+document.getElementById("exportBtn").addEventListener("click", function () {
+  const table = document.getElementById("data-rekap");
+  const workbook = XLSX.utils.table_to_book(table, { sheet: "Hafalan" });
+  XLSX.writeFile(workbook, "data_hafalan.xlsx");
+});
+
+

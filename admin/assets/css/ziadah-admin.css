@@ -1,4 +1,6 @@
-/* Reset & Global */
+/* ===========================
+   Reset & Global Styles
+=========================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +14,9 @@ body {
   background-color: #CEF8CA;
 }
 
-/* Sidebar */
+/* ===========================
+   Sidebar Styles
+=========================== */
 .sidebar {
   width: 354px;
   background-color: #ffffff;
@@ -112,7 +116,9 @@ body {
   border-radius: 10px;
 }
 
-/* Dropdown */
+/* ===========================
+   Dropdown Menu Styles
+=========================== */
 .dropdown {
   position: relative;
 }
@@ -150,7 +156,9 @@ body {
   flex-direction: column;
 }
 
-/* Main content */
+/* ===========================
+   Main Content Area Styles
+=========================== */
 .main {
   margin-left: 354px;
   position: relative;
@@ -166,7 +174,9 @@ body {
   transition: margin-left 0.3s ease;
 }
 
-/* Header */
+/* ===========================
+   Header Styles
+=========================== */
 .header {
   position: relative;
   height: 300px;
@@ -222,64 +232,41 @@ body {
   z-index: 6;
 }
 
-/* Container utama di bawah header */
+/* ===========================
+   Main Container under Header
+=========================== */
 .header-main {
   position: relative;
   top: 100px;
   width: auto;
   height: 700px;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 30px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 5;
   padding: 20px;
   margin: 10px auto;
   min-height: auto;
   max-width: 100%;
 }
 
-/* Konten utama */
-.visi,
-.misi,
-.program-unggulan {
-  position: relative;
-  top: 10px;
-  margin: 2px auto 25px auto;
-  width: 100%;
-  max-width: 100%;
-  border: 2px solid black;
-  border-radius: 12px;
-  padding: 5px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  box-sizing: border-box;
-}
-
-.visi h1,
-.misi h1,
-.program-unggulan h1 {
-  font-size: 25px;
-  /* Default heading size */
-  color: black;
+#data-ziadah thead th,
+#data-ziadah tbody td {
   text-align: center;
+  vertical-align: middle;
 }
 
-.visi p {
-  font-size: 21px;
-  /* Default paragraph size */
-  text-align: center;
-  color: black;
+#data-ziadah thead th {
+  color: #1C82F0;
 }
+ 
+.modal-content {
+    color: black;
+  }
 
-.misi p,
-.program-unggulan p {
-  font-size: 21px;
-  /* Default paragraph size */
-  text-align: justify;
-  color: black;
-}
 
-/* Overlay */
+/* ===========================
+   Overlay Styles
+=========================== */
 .overlay {
   position: fixed;
   top: 0;
@@ -296,7 +283,24 @@ body {
   display: block;
 }
 
-/* Responsive styles */
+/* ===========================
+   DataTables Text Color Overrides Search dan Show
+=========================== */
+.dataTables_length label,
+.dataTables_length select {
+  color: black !important;
+}
+
+.dataTables_filter label,
+.dataTables_filter input {
+  color: black !important;
+}
+
+/* ===========================
+   Responsive Styles
+=========================== */
+
+/* For screens <= 1024px */
 @media (max-width: 1024px) {
   .sidebar h2 {
     font-size: 28px;
@@ -327,6 +331,7 @@ body {
   }
 }
 
+/* For screens <= 768px */
 @media (max-width: 768px) {
   .sidebar {
     width: 250px;
@@ -373,6 +378,7 @@ body {
   }
 }
 
+/* For screens <= 480px */
 @media (max-width: 480px) {
   .sidebar {
     width: 250px;

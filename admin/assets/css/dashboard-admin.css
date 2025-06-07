@@ -247,7 +247,7 @@ body {
   margin: 2px auto 25px auto;
   width: 100%;
   max-width: 100%;
-  border: 2px solid black;
+  border: 1px solid #979797;
   border-radius: 12px;
   padding: 5px;
   background-color: #ffffff;
