@@ -1,23 +1,28 @@
 <?php
 session_start();
-if (!isset($_SESSION['nis'])) {
-    header("Location: dashboard-admin.html");
+define('BASE_DIR', realpath(__DIR__));
+include_once(BASE_DIR . '/config/config.php');
+
+// Jika belum login, arahkan ke halaman login
+if (!isset($_SESSION['nis']) || !isset($_SESSION['role'])) {
+    header("Location: " . BASE_URL . "/login/login.php");
     exit();
 }
+
+// Arahkan berdasarkan role
+switch ($_SESSION['role']) {
+    case 'admin':
+        header("Location: " . BASE_URL . "/admin/dashboard.php");
+        break;
+    case 'santri':
+        header("Location: " . BASE_URL . "/santri/profil.php");
+        break;
+    default:
+        // Role tidak dikenal, arahkan ke login dengan pesan error
+        $_SESSION['message'] = "Akses tidak valid.";
+        $_SESSION['message_type'] = "danger";
+        header("Location: " . BASE_URL . "/login/login.php");
+        break;
+}
+exit();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dashboard - Bait Qurani</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-  <div class="container mt-5">
-    <h2>Selamat datang, <?= htmlspecialchars($_SESSION['nis']); ?></h2>
-    <p>Role: <?= htmlspecialchars($_SESSION['role']); ?></p>
-    <a href="logout.php" class="btn btn-danger">Logout</a>
-  </div>
-</body>
-</html>

@@ -1,3 +1,4 @@
+/* Login */
 /* === ROOT VARIABLES === */
 :root {
   --primary-color: rgba(57, 153, 24, 1);
@@ -12,7 +13,7 @@
 
 /* === BACKGROUND DAN LAYOUT UTAMA === */
 body {
-  background-image: url('/assets/img/gambar1.jpg'); /* Pastikan path gambar benar */
+  background-image: url('../img/gambar1.jpg'); /* Pastikan path gambar benar */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

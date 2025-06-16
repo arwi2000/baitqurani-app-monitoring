@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Rekap</title>
+
+    <!-- Bootstrap CSS dari CDN untuk styling dan komponen -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- DataTables Bootstrap 5 CSS untuk tabel interaktif -->
+    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS khusus dashboard admin -->
+    <link rel="stylesheet" href="/admin/assets/css/rekap-admin.css" />
+</head>
+
+<body>
+    <!-- Sidebar navigasi utama -->
+    <div class="sidebar">
+        <img src="/assets/img/sidebar-logo.png" alt="Logo" class="sidebar-logo" />
+        <h2>Admin BQ</h2>
+
+        <hr class="separator" />
+
+        <!-- Menu sidebar -->
+        <div class="sidebar-text">
+            <a href="/admin/dashboard-admin.html">
+                <img src="/assets/img/dashboard.svg" class="menu-icon" /> BERANDA
+            </a>
+            <a href="/admin/santri-admin.html">
+                <img src="/assets/img/student-card.svg" class="menu-icon" /> SANTRI
+            </a>
+
+            <!-- Dropdown menu untuk Tahfidz -->
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">
+                    <img src="/assets/img/quran-02.svg" class="menu-icon" /> TAHFIDZ
+                </a>
+                <div class="dropdown-menu">
+                    <a href="/admin/ziadah-admin.html">
+                        <img src="/assets/img/quran-02.svg" class="menu-icon" /> ZIADAH
+                    </a>
+                    <a href="/admin/murojaah-admin.html">
+                        <img src="/assets/img/quran-02.svg" class="menu-icon" /> MUROJA'AH
+                    </a>
+                    <a href="/admin/tasmi-admin.html">
+                        <img src="/assets/img/quran-02.svg" class="menu-icon" /> TASMI'
+                    </a>
+                </div>
+            </div>
+
+            <a href="/admin/rekap-admin.html">
+                <img src="/assets/img/report.svg" class="menu-icon" /> REKAP
+            </a>
+        </div>
+    </div>
+
+    <!-- Overlay untuk sidebar di tampilan mobile saat sidebar aktif -->
+    <div class="overlay"></div>
+
+    <!-- Konten utama halaman -->
+    <div class="main">
+        <!-- Header atas dengan judul dan tombol logout -->
+        <div class="header">
+            <div class="header-texts">
+                <!-- Tombol logout -->
+                <a href="/login.html">
+                    <img src="/assets/img/logout-square.svg" alt="Logout" class="logout-icon" />
+                </a>
+
+                <div class="header-row">
+                    <!-- Ikon hamburger untuk toggle sidebar -->
+                    <img src="/assets/img/hamburger.svg" class="hamburger-icon" />
+                    <h1>BQ TAHFIDZ</h1>
+                </div>
+            </div>
+
+            <!-- Subtitle header -->
+            <h3 class="header-subtitle">DATA REKAP</h3>
+
+            <!-- Kontainer utama di bawah header untuk isi dashboard -->
+            <div class="header-main">
+                <div class="container-fluid">
+                    <div class="dropdown-column">
+                        <div class="pilih-hafalan">
+                            <label class="form-kelas"></label>
+                            <select class="form-select" name="tkelas" required>
+                                <option value="" disabled selected hidden>Pilih Jenis Hafalan</option>
+                                <option value="Al-Fatihah">Laki-Laki</option>
+                                <option value="Al-Baqarah">Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div class="pilih-bulan">
+                            <label class="form-kelas"></label>
+                            <select class="form-select" name="tkelas" required>
+                                <option value="" disabled selected hidden>Pilih Bulan</option>
+                                <option value="Bulan 1">Januari</option>
+                                <option value="Bulan 2">Februari</option>
+                                <option value="Bulan 3">Maret</option>
+                                <option value="Bulan 4">April</option>
+                                <option value="Bulan 5">Mei</option>
+                                <option value="Bulan 6">Juni</option>
+                                <option value="Bulan 7">Juli</option>
+                                <option value="Bulan 8">Agustus</option>
+                                <option value="Bulan 9">September</option>
+                                <option value="Bulan 10">Oktober</option>
+                                <option value="Bulan 11">November</option>
+                                <option value="Bulan 12">Desember</option>
+                            </select>
+                        </div>
+
+                        <div class="export-button-wrapper">
+                            <button class="btn-export-data" id="exportBtn">Print</button>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <!-- Tabel data rekap dengan DataTables -->
+                <table id="data-rekap" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIS</th>
+                            <th>Nama Lengkap</th>
+                            <th>Kelas</th>
+                            <th>Jenis Kelamin</th>
+                            <th>halaman</th>
+                            <th>Juz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Contoh baris data -->
+                        <tr>
+                            <td>1</td>
+                            <td>01</td>
+                            <td>ARI WIJAYANTO</td>
+                            <td>007</td>
+                            <td>Laki-Laki</td>
+                            <td>1</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>02</td>
+                            <td>KUSNADI AMIRUDIN</td>
+                            <td>007</td>
+                            <td>Laki-Laki</td>
+                            <td>1</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>03</td>
+                            <td>M. ADNAN ALWI</td>
+                            <td>007</td>
+                            <td>Laki-Laki</td>
+                            <td>1</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>04</td>
+                            <td>MEI MEI</td>
+                            <td>007</td>
+                            <td>Perempuan</td>
+                            <td>1</td>
+                            <td>5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal Bootstrap untuk tambah atau edit data -->
+        <div class="modal fade" id="modalTambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-lg">
+                <div class="modal-content">
+                    <!-- Header modal -->
+                    <div class="modal-header">
+                        <img src="/assets/img/person-circle.svg" style="width: 24px; height: 24px;" />
+                        <h1 class="modal-title fs-4 ms-2" id="staticBackdropLabel">Form Data Rekap</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Body modal (isi form atau konten) -->
+                    <form method="POST" action="crud-rekap.php">
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label class="form-label">NIS</label>
+                                <input type="text" class="form-control" name="tnis"
+                                    placeholder="Masukkan Nomor Induk Santri">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" name="tnama"
+                                    placeholder="Masukkan Nama Lengkap Santri">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-kelas">Kelas</label>
+                                <select class="form-select" name="tkelas">
+                                    <option>
+                                    </option>
+                                    <option value="Kelas 7">Kelas 7</option>
+                                    <option value="Kelas 8">Kelas 8</option>
+                                    <option value="Kelas 9">Kelas 9</option>
+                                    <option value="Kelas 10">Kelas 10</option>
+                                    <option value="Kelas 10">Kelas 11</option>
+                                    <option value="Kelas 10">Kelas 12</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-kelas">Jenis Kelamin</label>
+                                <select class="form-select" name="tkelas">
+                                    <option>
+                                    </option>
+                                    <option value="Kelas 7">Laki-Laki</option>
+                                    <option value="Kelas 8">Perempuan</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+
+                        <!-- Footer modal dengan tombol aksi -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn simpan-data-btn" name="bsimpan">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Script dependencies -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Custom script dashboard admin -->
+    <script src="/admin/assets/js/rekap-admin.js"></script>
+
+    <!-- Inisialisasi DataTable pada tabel #data-rekap -->
+    <script>
+        $(document).ready(function () {
+            $('#data-rekap').DataTable();
+        });
+    </script>
+</body>
+
+</html>
