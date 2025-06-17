@@ -1,135 +1,96 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ===== DROPDOWN TOGGLE =====
-  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-  dropdownToggles.forEach(toggle => {
-    toggle.addEventListener('click', function (e) {
-      e.preventDefault();
-      const parent = this.closest('.dropdown');
-      dropdownToggles.forEach(otherToggle => {
-        if (otherToggle !== this) {
-          const otherParent = otherToggle.closest('.dropdown');
-          otherParent.classList.remove('active');
-        }
-      });
-      parent.classList.toggle('active');
-    });
-  });
+  // ===== ALERT LOGIN BERHASIL =====
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const loginStatus = params.get('login');
+    if (loginStatus === 'success') {
+      alert('Login berhasil! Selamat datang!');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  })();
 
-  // ===== SIDEBAR TOGGLE & OVERLAY =====
+  // ===== ELEMENT UTAMA =====
   const hamburger = document.querySelector('.hamburger-icon');
   const sidebar = document.querySelector('.sidebar');
   const main = document.querySelector('.main');
   const overlay = document.querySelector('.overlay');
 
-  if (!sidebar || !main || !overlay) {
-    console.warn('Elemen sidebar, main, atau overlay tidak ditemukan!');
+  if (!sidebar || !main || !overlay || !hamburger) {
+    console.warn('Elemen penting hilang.');
     return;
   }
 
-  function toggleOverlay() {
-    const isSidebarClosed = sidebar.classList.contains('closed');
-    overlay.style.display = isSidebarClosed ? 'none' : 'block';
-  }
-
-  if (hamburger) {
-    hamburger.addEventListener('click', () => {
-      sidebar.classList.toggle('closed');
-      main.classList.toggle('sidebar-closed');
-      toggleOverlay();
-    });
-  }
-
-  document.addEventListener('click', (e) => {
-    const clickInsideSidebar = sidebar.contains(e.target);
-    const clickOnHamburger = hamburger && hamburger.contains(e.target);
-    const clickOnOverlay = overlay.contains(e.target);
-    const isSidebarOpen = !sidebar.classList.contains('closed');
-
-    if (isSidebarOpen && !clickInsideSidebar && !clickOnHamburger && !clickOnOverlay) {
-      sidebar.classList.add('closed');
-      main.classList.add('sidebar-closed');
-      toggleOverlay();
-    }
-  });
-
-  overlay.addEventListener('click', () => {
+  const isOpen = () => !sidebar.classList.contains('closed');
+  const closeSidebar = () => {
     sidebar.classList.add('closed');
     main.classList.add('sidebar-closed');
-    toggleOverlay();
+    overlay.classList.remove('active');
+  };
+  const openSidebar = () => {
+    sidebar.classList.remove('closed');
+    main.classList.remove('sidebar-closed');
+    overlay.classList.add('active');
+  };
+  const toggleSidebar = () => (isOpen() ? closeSidebar() : openSidebar());
+
+  hamburger.addEventListener('click', toggleSidebar);
+
+  document.addEventListener('click', (e) => {
+    const clickOutsideSidebar =
+      !sidebar.contains(e.target) &&
+      !hamburger.contains(e.target) &&
+      !overlay.contains(e.target) &&
+      !e.target.closest('.tahfidz-dropdown');
+
+    if (isOpen() && clickOutsideSidebar) {
+      closeSidebar();
+    }
   });
 
-  function handleResponsiveSidebar() {
-    if (window.innerWidth <= 768) {
-      sidebar.classList.add('closed');
-      main.classList.add('sidebar-closed');
-    } else {
-      sidebar.classList.remove('closed');
-      main.classList.remove('sidebar-closed');
-    }
-    toggleOverlay();
-  }
+  overlay.addEventListener('click', closeSidebar);
 
+  // ===== RESPONSIVE SIDEBAR =====
+  function handleResponsiveSidebar() {
+    window.innerWidth <= 1024 ? closeSidebar() : openSidebar();
+  }
   handleResponsiveSidebar();
   window.addEventListener('resize', handleResponsiveSidebar);
 
-  // ===== TAMPILKAN NAMA FILE PDF YANG DIPILIH =====
-  const pdfFileInput = document.getElementById('pdfFile');
-  const pdfFileName = document.getElementById('pdfFileName');
-
-  if (pdfFileInput && pdfFileName) {
-    pdfFileInput.addEventListener('change', () => {
-      if (pdfFileInput.files.length > 0) {
-        pdfFileName.textContent = "File yang dipilih: " + pdfFileInput.files[0].name;
-      } else {
-        pdfFileName.textContent = "";
-      }
-    });
-  }
-
-
-  // ===== AJAX: UPLOAD PROGRAM FILE =====
-  const uploadForm = document.querySelector('form[action="upload-program.php"]');
-  if (uploadForm) {
-    uploadForm.addEventListener('submit', function (e) {
+  // ===== DROPDOWN SIDEBAR =====
+  document.querySelectorAll('.tahfidz-toggle-dropdown').forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
       e.preventDefault();
-      const formData = new FormData(uploadForm);
-
-      fetch('upload-program.php', {
-        method: 'POST',
-        body: formData
-      })
-        .then(res => res.text())
-        .then(msg => {
-          alert(msg);
-          // Optional: bisa tambahkan refresh list atau reload halaman jika perlu
-          location.reload(); // jika ingin langsung lihat hasil upload
-        });
-    });
-  }
-
-  // ===== AJAX: DELETE PROGRAM FILE =====
-  document.querySelectorAll('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-      if (!confirm('Yakin ingin menghapus?')) return;
-
-      const form = btn.closest('.delete-form');
-      const formData = new FormData(form);
-
-      fetch('delete-program.php', {
-        method: 'POST',
-        body: formData
-      })
-        .then(res => res.text())
-        .then(msg => {
-          alert(msg);
-          location.reload(); // Reload list setelah hapus
-        })
-        .catch(err => {
-          alert("Terjadi kesalahan saat menghapus file.");
-          console.error(err);
-        });
+      e.stopPropagation();
+      const parent = toggle.closest('.tahfidz-dropdown');
+      document.querySelectorAll('.tahfidz-dropdown.active').forEach(d => {
+        if (d !== parent) d.classList.remove('active');
+      });
+      parent.classList.toggle('active');
     });
   });
 
+  // ===== DATATABLES & ICON SEARCH =====
+  if (typeof jQuery !== 'undefined' && $.fn.DataTable) {
+    $(document).ready(function () {
+      $('#data-santri').DataTable({
+        autoWidth: false,
+        pageLength: 8,
+        language: {
+          paginate: {
+            previous: "Sebelum",
+            next: "Selanjutnya"
+          }
+        },
+        columnDefs: [
+          { targets: '_all', className: 'text-center' }
+        ]
+      });
+
+      // Ganti warna teks filter dan info
+      $('#data-santri_filter label, #data-santri_info').css('color', 'black');
+    });
+  } else {
+    console.warn('jQuery/DataTables tidak ditemukan.');
+  }
 
 });

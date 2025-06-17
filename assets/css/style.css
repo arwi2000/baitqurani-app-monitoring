@@ -1,6 +1,4 @@
-/* ===========================
-   Reset & Global Styles
-=========================== */
+/* Reset & Global */
 * {
   margin: 0;
   padding: 0;
@@ -14,9 +12,7 @@ body {
   background-color: #CEF8CA;
 }
 
-/* ===========================
-   Sidebar Styles
-=========================== */
+/* Sidebar */
 .sidebar {
   width: 354px;
   background-color: #ffffff;
@@ -60,7 +56,6 @@ body {
   margin: 50px auto 0 auto;
 }
 
-
 .menu-icon {
   width: 24px;
   height: 24px;
@@ -93,14 +88,12 @@ body {
   border-radius: 10px;
 }
 
-/* ===========================
-   Dropdown Menu Styles
-=========================== */
-.dropdown {
+/* Dropdown */
+.tahfidz-dropdown {
   position: relative;
 }
 
-.dropdown-toggle {
+.tahfidz-toggle-dropdown {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -112,30 +105,29 @@ body {
   margin-left: 10px;
 }
 
-.dropdown-menu {
+.tahfidz-menu-dropdown {
   display: none;
   flex-direction: column;
   margin-left: 70px;
 }
 
-.dropdown-menu a {
+.tahfidz-menu-dropdown a {
   font-size: 20px !important;
   padding: 10px 20px;
   color: black;
+  text-decoration: none;
 }
 
-.dropdown-menu a:hover {
+.tahfidz-menu-dropdown a:hover {
   background-color: #CEF8CA;
 }
 
-.dropdown.active .dropdown-menu {
+.tahfidz-dropdown.active .tahfidz-menu-dropdown {
   display: flex;
-  flex-direction: column;
 }
 
-/* ===========================
-   Main Content Area Styles
-=========================== */
+
+/* Main content */
 .main {
   margin-left: 354px;
   position: relative;
@@ -151,9 +143,7 @@ body {
   transition: margin-left 0.3s ease;
 }
 
-/* ===========================
-   Header Styles
-=========================== */
+/* Header */
 .header {
   position: relative;
   height: 300px;
@@ -209,16 +199,14 @@ body {
   z-index: 6;
 }
 
-/* ===========================
-   Main Container under Header
-=========================== */
+/* Container utama di bawah header */
 .header-main {
   position: relative;
   top: 100px;
   width: auto;
   height: 700px;
   background-color: white;
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 5;
   padding: 20px;
@@ -227,92 +215,7 @@ body {
   max-width: 100%;
 }
 
-/* Simpan dan Tambah Btn */
-.simpan-data-btn,
-.tambah-data-btn {
-  background-color: #1C82F0;
-  color: white !important;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.simpan-data-btn:hover,
-.tambah-data-btn:hover {
-  background-color: #0059b8;
-}
-/* Style tombol pagination */
-.dataTables_wrapper .dataTables_paginate ul.pagination li.page-item a.page-link {
-  background-color: white;
-  color: black;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-}
-
-/* Hover */
-.dataTables_wrapper .dataTables_paginate ul.pagination li.page-item a.page-link:hover {
-  background-color: #0059b8;
-  color: white;
-}
-
-/* Tombol aktif */
-.dataTables_wrapper .dataTables_paginate ul.pagination li.page-item.active a.page-link {
-  background-color: #1C82F0;
-  color: white;
-  border: none;
-}
-
-
-/* Bungkus filter agar bisa dikontrol posisinya */
-.search-container {
-  display: flex;
-  justify-content: flex-end; /* posisikan ke kanan */
-  width: 100%;
-  margin-bottom: 1rem;
-  overflow-x: auto;
-}
-
-/* Gaya label (input + logo) */
-.dataTables_filter {
-  display: flex;
-  justify-content: flex-end;
-  width: auto;
-}
-
-/* Supaya input + gambar sejajar dan tidak melebar */
-.dataTables_filter label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap; /* mencegah pecah baris */
-}
-
-/* Logo search */
-.dataTables_filter .search-icon {
-  width: 35px;
-  height: auto;
-  background-color: #1C82F0;
-  padding: 3px 6px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-
-
-
-#data-santri thead th,
-#data-santri tbody td {
-  text-align: center;
-  vertical-align: middle;
-}
-
-.modal-content {
-  color: black;
-}
-
-/* ===========================
-   Overlay Styles
-=========================== */
+/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -329,24 +232,7 @@ body {
   display: block;
 }
 
-/* ===========================
-   DataTables Text Color Overrides
-=========================== */
-.dataTables_length label,
-.dataTables_length select {
-  color: black !important;
-}
-
-.dataTables_filter label,
-.dataTables_filter input {
-  color: black !important;
-}
-
-/* ===========================
-   Responsive Styles
-=========================== */
-
-/* For screens <= 1024px */
+/* Responsive styles */
 @media (max-width: 1024px) {
   .sidebar h2 {
     font-size: 28px;
@@ -365,7 +251,6 @@ body {
   }
 }
 
-/* For screens <= 768px */
 @media (max-width: 768px) {
   .sidebar {
     width: 250px;
@@ -398,10 +283,8 @@ body {
   .header-subtitle {
     font-size: 18px;
   }
-
 }
 
-/* For screens <= 480px */
 @media (max-width: 480px) {
   .sidebar {
     width: 250px;
@@ -430,5 +313,4 @@ body {
   .header-subtitle {
     font-size: 16px;
   }
-
 }

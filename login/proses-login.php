@@ -15,12 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = mysqli_stmt_get_result($stmt);
 
         if ($data = mysqli_fetch_assoc($result)) {
-            // Verifikasi password (sementara masih tanpa hash)
-            if ($password === $data['password']) {
+            // Verifikasi password dengan password_verify
+            if (password_verify($password, $data['password'])) {
                 $_SESSION['nis'] = $data['nis'];
                 $_SESSION['role'] = $data['role'];
 
-                // Berikan pesan sukses login
                 $_SESSION['message'] = "Berhasil login sebagai " . ucfirst($data['role']);
                 $_SESSION['message_type'] = "success";
 
@@ -31,21 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: " . BASE_URL . "/santri/profil.php");
                     exit();
                 } else {
-                    // Role tidak dikenali
                     $_SESSION['message'] = "Role tidak dikenali.";
                     $_SESSION['message_type'] = "warning";
                     header("Location: login.php");
                     exit();
                 }
             } else {
-                // Password salah
                 $_SESSION['message'] = "Password salah!";
                 $_SESSION['message_type'] = "danger";
                 header("Location: login.php");
                 exit();
             }
         } else {
-            // User tidak ditemukan
             $_SESSION['message'] = "NIS tidak ditemukan!";
             $_SESSION['message_type'] = "danger";
             header("Location: login.php");
