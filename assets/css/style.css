@@ -15,7 +15,7 @@ body {
 /* Sidebar */
 .sidebar {
   width: 354px;
-  background-color: #ffffff;
+  background-color: white;
   color: black;
   padding: 0 20px 20px 20px;
   position: fixed;
@@ -126,7 +126,6 @@ body {
   display: flex;
 }
 
-
 /* Main content */
 .main {
   margin-left: 354px;
@@ -205,14 +204,31 @@ body {
   top: 100px;
   width: auto;
   height: 700px;
+  /* Pertimbangkan apakah ini perlu fixed height */
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 5;
   padding: 20px;
   margin: 10px auto;
   min-height: auto;
   max-width: 100%;
+}
+
+/* Konten utama - disatukan untuk program dan santri */
+#data-program_wrapper,
+#data-santri_wrapper {
+  /* aktifkan scroll horizontal */
+}
+
+#data-program,
+#data-santri {
+  min-width: 100%;
+  width: max-content;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Overlay */
@@ -257,6 +273,7 @@ body {
     padding: 20px;
     overflow: hidden;
     transform: translateX(0);
+    /* Default to visible for smaller screens, controlled by JS if needed */
     transition: transform 0.3s ease;
   }
 
@@ -266,6 +283,7 @@ body {
 
   .main {
     margin-left: 0;
+    /* Main content always starts from left for smaller screens */
   }
 
   .sidebar h2 {

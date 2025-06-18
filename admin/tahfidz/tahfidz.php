@@ -78,7 +78,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                     <h1>BQ TAHFIDZ</h1>
                 </div>
             </div>
-            <h3 class="header-subtitle">DATA SANTRI</h3>
+            <h3 class="header-subtitle">DATA TAHFIDZ</h3>
             <div class="header-main">
                 <div class="container-fluid">
                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
@@ -91,10 +91,13 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>NIS</th>
-                                    <th>NAMA</th>
+                                    <th>Tanggal</th>
+                                    <th>Nama</th>
                                     <th>Kelas</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>Tahfidz</th>
+                                    <th>Halaman</th>
+                                    <th>Juz</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -109,6 +112,9 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                         <td><?= $data['nis'] ?></td>
                                         <td><?= $data['nama_lengkap'] ?></td>
                                         <td><?= $data['kelas'] ?></td>
+                                        <td><?= $data['jenis_kelamin'] ?></td>
+                                        <td><?= $data['jenis_kelamin'] ?></td>
+                                        <td><?= $data['jenis_kelamin'] ?></td>
                                         <td><?= $data['jenis_kelamin'] ?></td>
                                         <td>
                                             <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalUbah<?= $no ?>">Ubah</a>
@@ -231,7 +237,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                     <div class="modal-content">
                         <div class="modal-header text-black">
                             <img src="<?= BASE_URL ?>/assets/img/person-circle.svg" style="width: 24px; height: 24px;" />
-                            <h1 class="modal-title fs-4 ms-2">Form Data Santri</h1>
+                            <h1 class="modal-title fs-4 ms-2">Form </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 

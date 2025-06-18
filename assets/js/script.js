@@ -69,13 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== DATATABLES & ICON SEARCH =====
+  // ===== DATATABLES & ICON SEARCH (Untuk #data-santri) =====
   if (typeof jQuery !== 'undefined' && $.fn.DataTable) {
     $(document).ready(function () {
       $('#data-santri').DataTable({
         autoWidth: false,
         pageLength: 8,
         language: {
+          search: "Cari:",
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
           paginate: {
             previous: "Sebelum",
             next: "Selanjutnya"
@@ -83,11 +85,41 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         columnDefs: [
           { targets: '_all', className: 'text-center' }
-        ]
+        ],
+        // DOM: Kolom kiri kosong, Kolom kanan ada filter (search)
+        dom: '<"row"<"col-sm-12 col-md-6"><"col-sm-12 col-md-6"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>'
       });
 
-      // Ganti warna teks filter dan info
+      // Ganti warna teks filter dan info untuk #data-santri
       $('#data-santri_filter label, #data-santri_info').css('color', 'black');
+    });
+  } else {
+    console.warn('jQuery/DataTables tidak ditemukan.');
+  }
+
+  // ===== DATATABLES & ICON SEARCH (Untuk #data-program) =====
+  if (typeof jQuery !== 'undefined' && $.fn.DataTable) {
+    $(document).ready(function () {
+      $('#data-program').DataTable({ // <-- Ubah ID di sini
+        autoWidth: false,
+        pageLength: 6,
+        language: {
+          search: "Cari:",
+          info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+          paginate: {
+            previous: "Sebelum",
+            next: "Selanjutnya"
+          }
+        },
+        columnDefs: [
+          { targets: '_all', className: 'text-center' }
+        ],
+        // DOM: Kolom kiri kosong, Kolom kanan ada filter (search)
+        dom: '<"row"<"col-sm-12 col-md-6"><"col-sm-12 col-md-6"f>><"row"<"col-sm-12"tr>><"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>'
+      });
+
+      // Ganti warna teks filter dan info untuk #data-program
+      $('#data-program_filter label, #data-program_info').css('color', 'black'); // <-- Ubah ID di sini
     });
   } else {
     console.warn('jQuery/DataTables tidak ditemukan.');
