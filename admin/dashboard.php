@@ -45,7 +45,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
             <a href="<?= BASE_URL ?>/admin/dashboard.php"><img src="<?= BASE_URL ?>/assets/img/dashboard.svg" class="menu-icon" />BERANDA</a>
             <a href="<?= BASE_URL ?>/admin/santri/index.php"><img src="<?= BASE_URL ?>/assets/img/student-card.svg" class="menu-icon" />SANTRI</a>
             <a href="<?= BASE_URL ?>/admin/tahfidz/tahfidz.php"><img src="<?= BASE_URL ?>/assets/img/quran-02.svg" class="menu-icon" />TAHFIDZ</a>
-            <a href="<?= BASE_URL ?>/admin/rekap/index.php"><img src="<?= BASE_URL ?>/assets/img/report.svg" class="menu-icon" /> REKAP</a>
+            <a href="<?= BASE_URL ?>/admin/rekap/index-rekap.php"><img src="<?= BASE_URL ?>/assets/img/report.svg" class="menu-icon" /> REKAP</a>
         </div>
     </div>
 
@@ -78,7 +78,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                     <th>Program</th>
                                     <th>Kelas</th>
                                     <th>Semester 1</th>
-                                    <th>Jenis Kelamin</th>
+                                    <th>Semester 2</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -101,6 +101,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                         </td>
                                     </tr>
 
+                                    <!-- Modal Ubah -->
                                     <div class="modal fade" id="modalUbahProgram<?= htmlspecialchars($data['program_tahfidz_id']) ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -115,19 +116,26 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                                         <input type="hidden" name="tpid" value="<?= htmlspecialchars($data['program_tahfidz_id']) ?>">
                                                         <div class="mb-3">
                                                             <label class="form-label">Program</label>
-                                                            <input type="text" class="form-control" name="tpprogram" value="<?= htmlspecialchars($data['program']) ?>" placeholder="Masukkan Program" required>
+                                                            <input type="text" class="form-control" name="tpprogram" value="<?= htmlspecialchars($data['program']) ?>" required placeholder="Masukkan Program">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Kelas</label>
-                                                            <input type="text" class="form-control" name="tpkelas" value="<?= htmlspecialchars($data['kelas']) ?>" placeholder="Masukkan Kelas" required>
+                                                            <select class="form-select" name="tpkelas" value="<?= htmlspecialchars($data['kelas']) ?>" required placeholder="Masukkan Kelas">
+                                                                <option value="Kelas 7">Kelas 7</option>
+                                                                <option value="Kelas 8">Kelas 8</option>
+                                                                <option value="Kelas 9">Kelas 9</option>
+                                                                <option value="Kelas 10">Kelas 10</option>
+                                                                <option value="Kelas 11">Kelas 11</option>
+                                                                <option value="Kelas 12">Kelas 12</option>
+                                                            </select>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Semester 1</label>
-                                                            <input type="text" class="form-control" name="tpsemester1" value="<?= htmlspecialchars($data['semester_1']) ?>" placeholder="Masukkan Program Semester 1" required>
+                                                            <input type="text" class="form-control" name="tpsemester1" value="<?= htmlspecialchars($data['semester_1']) ?>" required placeholder="Masukkan Program Semester 1">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Semester 2</label>
-                                                            <input type="text" class="form-control" name="tpsemester2" value="<?= htmlspecialchars($data['semester_2']) ?>" placeholder="Masukkan Program Semester 2" required>
+                                                            <input type="text" class="form-control" name="tpsemester2" value="<?= htmlspecialchars($data['semester_2']) ?>" required placeholder="Masukkan Program Semester 2">
                                                         </div>
                                                     </div>
 
@@ -139,6 +147,9 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                             </div>
                                         </div>
                                     </div>
+                                     <!-- Modal Ubah -->
+                                    
+                                      <!-- Modal Hapus -->
                                     <div class="modal fade" id="modalHapusProgram<?= htmlspecialchars($data['program_tahfidz_id']) ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -166,6 +177,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                             </div>
                                         </div>
                                     </div>
+                                     <!-- Modal Hapus -->
                                 <?php endwhile; ?>
                             </tbody>
                         </table>
@@ -174,6 +186,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                 </div>
             </div>
 
+            <!-- Modal Tambah -->
             <div class="modal fade" id="modalTambahProgram" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -192,14 +205,13 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                 <div class="mb-3">
                                     <label class="form-label">Kelas</label>
                                     <select class="form-select" name="tpkelas" required>
-                                        <option value=""></option>
+                                        <option value="">Pilih Kelas</option>
                                         <option value="Kelas 7">Kelas 7</option>
                                         <option value="Kelas 8">Kelas 8</option>
                                         <option value="Kelas 9">Kelas 9</option>
                                         <option value="Kelas 10">Kelas 10</option>
                                         <option value="Kelas 11">Kelas 11</option>
                                         <option value="Kelas 12">Kelas 12</option>
-                                        <option value="PK">PK</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -222,6 +234,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                     </div>
                 </div>
             </div>
+            <!-- Modal Tambah -->
         </div>
     </div>
 

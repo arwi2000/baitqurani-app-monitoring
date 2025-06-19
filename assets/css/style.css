@@ -1,334 +1,397 @@
-/* Reset & Global */
+/* Reset & Global Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-  display: flex;
-  min-height: 100vh;
-  background-color: #CEF8CA;
+    display: flex;
+    min-height: 100vh;
+    background-color: #CEF8CA;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 354px;
-  background-color: white;
-  color: black;
-  padding: 0 20px 20px 20px;
-  position: fixed;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  transition: transform 0.3s ease;
+    width: 354px;
+    background-color: white;
+    color: black;
+    padding: 0 20px 20px 20px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: transform 0.3s ease;
 }
 
 .sidebar.closed {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
 }
 
 .sidebar-logo {
-  display: block;
-  margin: 20px auto;
-  max-width: 100px;
-  height: auto;
-  border-radius: 10%;
+    display: block;
+    margin: 20px auto;
+    max-width: 100px;
+    height: auto;
+    border-radius: 10%;
 }
 
 .sidebar h2 {
-  margin-top: 0;
-  margin-bottom: 36px;
-  text-align: center;
-  font-size: 32px;
-  /* Default font size */
+    margin-top: 0;
+    margin-bottom: 36px;
+    text-align: center;
+    font-size: 32px;
 }
 
 .separator {
-  border: none;
-  border-bottom: 3px solid #ccc;
-  width: 100%;
-  margin: 50px auto 0 auto;
+    border: none;
+    border-bottom: 3px solid #ccc;
+    width: 100%;
+    margin: 50px auto 0 auto;
 }
 
 .menu-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 5px;
-  vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 .sidebar-text {
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .sidebar a {
-  display: block;
-  padding: 12px 50px;
-  color: black;
-  text-decoration: none;
-  transition: 0.3s;
-  text-align: left;
-  width: 100%;
-  font-size: 25px;
-  /* Default font size */
+    display: block;
+    padding: 12px 50px;
+    color: black;
+    text-decoration: none;
+    transition: 0.3s;
+    text-align: left;
+    width: 100%;
+    font-size: 25px;
 }
 
 .sidebar a:hover {
-  background-color: #CEF8CA;
-  color: black;
-  border-radius: 10px;
+    background-color: #CEF8CA;
+    color: black;
+    border-radius: 10px;
 }
 
 /* Dropdown */
 .tahfidz-dropdown {
-  position: relative;
+    position: relative;
 }
 
 .tahfidz-toggle-dropdown {
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .arrow {
-  font-size: 32px;
-  margin-left: 10px;
+    font-size: 32px;
+    margin-left: 10px;
 }
 
 .tahfidz-menu-dropdown {
-  display: none;
-  flex-direction: column;
-  margin-left: 70px;
+    display: none;
+    flex-direction: column;
+    margin-left: 70px;
 }
 
 .tahfidz-menu-dropdown a {
-  font-size: 20px !important;
-  padding: 10px 20px;
-  color: black;
-  text-decoration: none;
+    font-size: 20px !important;
+    padding: 10px 20px;
+    color: black;
+    text-decoration: none;
 }
 
 .tahfidz-menu-dropdown a:hover {
-  background-color: #CEF8CA;
+    background-color: #CEF8CA;
 }
 
 .tahfidz-dropdown.active .tahfidz-menu-dropdown {
-  display: flex;
+    display: flex;
 }
 
 /* Main content */
 .main {
-  margin-left: 354px;
-  position: relative;
-  flex: 1;
-  min-height: 100vh;
-  background-color: #CEF8CA;
-  overflow-x: hidden;
-  transition: margin-left 0.3s ease;
+    margin-left: 354px;
+    position: relative;
+    flex: 1;
+    min-height: 100vh;
+    background-color: #CEF8CA;
+    overflow-x: hidden;
+    transition: margin-left 0.3s ease;
 }
 
 .main.sidebar-closed {
-  margin-left: 0 !important;
-  transition: margin-left 0.3s ease;
+    margin-left: 0 !important;
+    transition: margin-left 0.3s ease;
 }
 
 /* Header */
 .header {
-  position: relative;
-  height: 300px;
-  background-color: #108E04;
-  padding: 15px 25px;
-  color: white;
-  border-radius: 0 0 20px 20px;
+    position: relative;
+    height: 300px;
+    background-color: #108E04;
+    padding: 15px 25px;
+    color: white;
+    border-radius: 0 0 20px 20px;
 }
 
 .header-texts {
-  padding: 10px;
-  position: relative;
+    padding: 10px;
+    position: relative;
 }
 
 .header-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .header-row h1 {
-  margin: 0;
-  font-size: 36px;
-  /* Default font size header */
-  color: white;
+    margin: 0;
+    font-size: 36px;
+    color: white;
 }
 
 .hamburger-icon {
-  color: white;
-  cursor: pointer;
-  position: relative;
-  width: 30px;
-  height: 30px;
-  transition: filter 0.3s ease;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    transition: filter 0.3s ease;
 }
 
 .logout-icon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 30px;
-  cursor: pointer;
-  fill: white;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    cursor: pointer;
+    fill: white;
 }
 
 .header-subtitle {
-  position: absolute;
-  top: 150px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 25px;
-  /* Default font size */
-  z-index: 6;
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 25px;
+    z-index: 6;
 }
 
-/* Container utama di bawah header */
+/* Main container below header */
 .header-main {
-  position: relative;
-  top: 100px;
-  width: auto;
-  height: 700px;
-  /* Pertimbangkan apakah ini perlu fixed height */
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin: 10px auto;
-  min-height: auto;
-  max-width: 100%;
+    position: relative;
+    top: 100px;
+    width: auto;
+    height: 1000px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px auto;
+    min-height: auto;
+    max-width: 100%;
 }
 
-/* Konten utama - disatukan untuk program dan santri */
+/* DataTables wrapper for horizontal scroll */
 #data-program_wrapper,
-#data-santri_wrapper {
-  /* aktifkan scroll horizontal */
+#data-santri_wrapper,
+#data-tahfidz_wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
+/* Ensure table takes full width and adjusts content */
 #data-program,
-#data-santri {
-  min-width: 100%;
-  width: max-content;
+#data-santri,
+#data-tahfidz {
+    min-width: 100%;
+    width: max-content;
 }
 
-.table-responsive {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+/* Overriding DataTables & Bootstrap Table Styles */
+
+/* Table header (thead th) styles */
+.dataTables_wrapper table.dataTable thead th {
+    background-color: #108E04;
+    color: white;
+    border-color: #0E7B03;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+/* Link text color in table header */
+.dataTables_wrapper table.dataTable thead th a {
+    color: white;
+}
+
+/* Sort icon color */
+.dataTables_wrapper table.dataTable thead .sorting,
+.dataTables_wrapper table.dataTable thead .sorting_asc,
+.dataTables_wrapper table.dataTable thead .sorting_desc {
+    color: white;
+}
+
+/* Table data cell (tbody td) padding and vertical alignment */
+.dataTables_wrapper table.dataTable tbody td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+/* DataTables filter and info text color */
+.dataTables_wrapper .dataTables_filter label,
+.dataTables_wrapper .dataTables_info {
+    color: black;
+}
+
+/* DataTables pagination active page style */
+.dataTables_wrapper .pagination .page-item.active .page-link {
+    background-color: #108E04;
+    border-color: #108E04;
+    color: #FFFFFF;
+}
+
+/* Pagination link text color */
+.dataTables_wrapper .pagination .page-item .page-link {
+    color: #0d6efd;
+}
+
+/* Pagination link hover style */
+.dataTables_wrapper .pagination .page-item .page-link:hover {
+    background-color: #E0E0E0;
+    border-color: #E0E0E0;
+    color: #0d6efd;
 }
 
 /* Overlay */
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 99;
-  display: none;
-  transition: opacity 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    display: none;
+    transition: opacity 0.3s ease;
 }
 
 .overlay.active {
-  display: block;
+    display: block;
+}
+
+/* CUSTOM STYLES */
+
+/* Make readonly inputs appear disabled */
+.form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+    cursor: not-allowed;
+    color: #495057;
+    border-color: #ced4da;
 }
 
 /* Responsive styles */
 @media (max-width: 1024px) {
-  .sidebar h2 {
-    font-size: 28px;
-  }
+    .sidebar h2 {
+        font-size: 28px;
+    }
 
-  .sidebar a {
-    font-size: 22px;
-  }
+    .sidebar a {
+        font-size: 22px;
+    }
 
-  .header-row h1 {
-    font-size: 30px;
-  }
+    .header-row h1 {
+        font-size: 30px;
+    }
 
-  .header-subtitle {
-    font-size: 20px;
-  }
+    .header-subtitle {
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 250px;
-    padding: 20px;
-    overflow: hidden;
-    transform: translateX(0);
-    /* Default to visible for smaller screens, controlled by JS if needed */
-    transition: transform 0.3s ease;
-  }
+    .sidebar {
+        width: 250px;
+        padding: 20px;
+        overflow: hidden;
+        transform: translateX(0);
+        transition: transform 0.3s ease;
+    }
 
-  .sidebar.closed {
-    transform: translateX(-100%);
-  }
+    .sidebar.closed {
+        transform: translateX(-100%);
+    }
 
-  .main {
-    margin-left: 0;
-    /* Main content always starts from left for smaller screens */
-  }
+    .main {
+        margin-left: 0;
+    }
 
-  .sidebar h2 {
-    font-size: 22px;
-  }
+    .sidebar h2 {
+        font-size: 22px;
+    }
 
-  .sidebar a {
-    font-size: 18px;
-  }
+    .sidebar a {
+        font-size: 18px;
+    }
 
-  .header-row h1 {
-    font-size: 26px;
-  }
+    .header-row h1 {
+        font-size: 26px;
+    }
 
-  .header-subtitle {
-    font-size: 18px;
-  }
+    .header-subtitle {
+        font-size: 18px;
+    }
 }
 
 @media (max-width: 480px) {
-  .sidebar {
-    width: 250px;
-    padding: 20px;
-    overflow: hidden;
-    transform: translateX(0);
-    transition: transform 0.3s ease;
-  }
+    .sidebar {
+        width: 250px;
+        padding: 20px;
+        overflow: hidden;
+        transform: translateX(0);
+        transition: transform 0.3s ease;
+    }
 
-  .sidebar.closed {
-    transform: translateX(-100%);
-  }
+    .sidebar.closed {
+        transform: translateX(-100%);
+    }
 
-  .sidebar h2 {
-    font-size: 18px;
-  }
+    .sidebar h2 {
+        font-size: 18px;
+    }
 
-  .sidebar a {
-    font-size: 16px;
-  }
+    .sidebar a {
+        font-size: 16px;
+    }
 
-  .header-row h1 {
-    font-size: 22px;
-  }
+    .header-row h1 {
+        font-size: 22px;
+    }
 
-  .header-subtitle {
-    font-size: 16px;
-  }
+    .header-subtitle {
+        font-size: 16px;
+    }
 }

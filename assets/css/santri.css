@@ -204,6 +204,7 @@ body {
   top: 100px;
   width: auto;
   height: 700px;
+  /* Pertimbangkan apakah ini perlu fixed height */
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -213,12 +214,18 @@ body {
   max-width: 100%;
 }
 
-/* Konten utama */
-#data-santri_wrapper {
+/* Konten utama - disatukan untuk program, santri, dan tahfidz */
+#data-program_wrapper,
+#data-santri_wrapper,
+#data-tahfidz_wrapper {
+  /* <--- TAMBAHKAN INI */
   /* aktifkan scroll horizontal */
 }
 
-#data-santri {
+#data-program,
+#data-santri,
+#data-tahfidz {
+  /* <--- TAMBAHKAN INI */
   min-width: 100%;
   width: max-content;
 }
@@ -245,7 +252,6 @@ body {
   display: block;
 }
 
-
 /* Responsive styles */
 @media (max-width: 1024px) {
   .sidebar h2 {
@@ -271,6 +277,7 @@ body {
     padding: 20px;
     overflow: hidden;
     transform: translateX(0);
+    /* Default to visible for smaller screens, controlled by JS if needed */
     transition: transform 0.3s ease;
   }
 
@@ -280,6 +287,7 @@ body {
 
   .main {
     margin-left: 0;
+    /* Main content always starts from left for smaller screens */
   }
 
   .sidebar h2 {
