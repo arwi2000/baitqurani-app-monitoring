@@ -30,7 +30,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
 
 </head>
 
-<body>
+<body data-base-url="<?= BASE_URL ?>">
     <div class="sidebar">
         <img src="<?= BASE_URL ?>/assets/img/sidebar-logo.png" alt="Logo" class="sidebar-logo" />
         <h2>Admin BQ</h2>
@@ -91,7 +91,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                         <td><?= htmlspecialchars($data['tanggal']) ?></td>
                                         <td><?= htmlspecialchars($data['nama']) ?></td>
                                         <td><?= htmlspecialchars($data['kelas']) ?></td>
-                                        <td><?= htmlspecialchars($data['jenis_kelamin']) ?></td>
+                                        <td><?= htmlspecialchars($data['jenis_kelamin']) == 'l' ? 'Laki-Laki' : 'Perempuan' ?></td>
                                         <td><?= htmlspecialchars($data['jenis_tahfidz']) ?></td>
                                         <td><?= htmlspecialchars($data['halaman']) ?></td>
                                         <td><?= htmlspecialchars($data['juz']) ?></td>
@@ -140,8 +140,8 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                                         <div class="mb-3">
                                                             <label class="form-label">Jenis Kelamin</label>
                                                             <select class="form-select" required name="thkelamin">
-                                                                <option value="<?= htmlspecialchars($data['jenis_kelamin']) ?>"><?= htmlspecialchars($data['jenis_kelamin']) == 'l' ? 'Laki-Laki' : 'Perempuan' ?></option>
-                                                                <option value="Laki-laki">Laki-Laki</option>
+                                                                <option value="<?= htmlspecialchars($data['jenis_kelamin']) ?>"><?= htmlspecialchars($data['jenis_kelamin']) ?></option>
+                                                                <option value="Laki-laki">Laki-laki</option>
                                                                 <option value="Perempuan">Perempuan</option>
                                                             </select>
                                                         </div>
@@ -217,7 +217,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                             <div class="modal-body text-black">
                                 <div class="mb-3">
                                     <label class="form-label">NIS</label>
-                                    <input type="text" class="form-control" name="thnis" required placeholder="Masukkan Nomor Induk Santri">
+                                    <input type="text" class="form-control" name="thnis" id="tambah_nis" required placeholder="Masukkan Nomor Induk Santri">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Tanggal</label>
@@ -225,11 +225,11 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nama</label>
-                                    <input type="text" class="form-control" name="thnama" required placeholder="Masukkan Nama">
+                                    <input type="text" class="form-control" name="thnama" id="tambah_nama" required placeholder="Nama akan terisi otomatis" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Kelas</label>
-                                    <select class="form-select" name="thkelas" required>
+                                    <select class="form-select" name="thkelas" id="tambah_kelas" required disabled>
                                         <option value="">Pilih Kelas</option>
                                         <option value="Kelas 7">Kelas 7</option>
                                         <option value="Kelas 8">Kelas 8</option>
@@ -241,7 +241,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" required name="thkelamin">
+                                    <select class="form-select" required name="thkelamin" id="tambah_jenis_kelamin" disabled>
                                         <option value="">Pilih Jenis Kelamin</option>
                                         <option value="Laki-laki">Laki-laki</option>
                                         <option value="Perempuan">Perempuan</option>
@@ -284,6 +284,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] != 'admin') {
     <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
 
     <script src="<?= BASE_URL ?>/assets/js/script.js"></script>
+    <script src="<?= BASE_URL ?>/assets/js/tahfidz_script.js"></script>
 </body>
 
 </html>

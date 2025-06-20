@@ -48,8 +48,9 @@ function redirect($msg, $location = 'index.php')
  * Menghapus file foto lama dari direktori upload berdasarkan NIS santri.
  * @param string $nis NIS santri untuk mencari nama file foto di database.
  * @param mysqli $conn Objek koneksi database.
+ * @param string $base_dir BASE_DIR untuk path fisik file.
  */
-function hapusFoto($nis, $conn)
+function hapusFoto($nis, $conn, $base_dir)
 {
     $stmt = mysqli_prepare($conn, "SELECT foto FROM users WHERE nis=?");
     if ($stmt === false) {
@@ -63,9 +64,12 @@ function hapusFoto($nis, $conn)
     if ($result && $row = mysqli_fetch_assoc($result)) {
         $foto_lama = $row['foto'];
         if (!empty($foto_lama)) {
-            $path = BASE_DIR . "/uploads/" . $foto_lama;
+            // Perbaikan path foto: gunakan BASE_DIR dan sesuaikan dengan struktur folder 'uploads/foto-santri/'
+            $path = $base_dir . "/uploads/foto-santri/" . $foto_lama;
             if (file_exists($path) && is_file($path)) {
                 unlink($path);
+            } else {
+                error_log("File foto tidak ditemukan untuk dihapus: " . $path);
             }
         }
     }
@@ -110,10 +114,12 @@ if (isset($_POST['bsimpan'])) {
     mysqli_stmt_close($stmt_check_nis);
 
     $foto_nama_file = '';
-    if (uploadFoto('tfoto', BASE_DIR . '/uploads', $foto_nama_file)) {
+    // Menggunakan path yang sesuai untuk upload foto
+    $upload_dir_path = BASE_DIR . '/uploads/foto-santri'; // Pastikan folder ini ada dan writable
+    if (uploadFoto('tfoto', $upload_dir_path, $foto_nama_file)) {
         // Foto uploaded
     } else {
-        $foto_nama_file = '';
+        $foto_nama_file = ''; // Jika gagal upload atau tidak ada file, set kosong
     }
 
     $stmt = mysqli_prepare($conn, "INSERT INTO users (nis, nama_lengkap, kelas, jenis_kelamin, role, password, foto) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -167,9 +173,10 @@ if (isset($_POST['bubah'])) {
     }
 
     $foto_baru_nama_file = '';
+    $upload_dir_path = BASE_DIR . '/uploads/foto-santri'; // Pastikan folder ini ada dan writable
     if (isset($_FILES['tfoto']) && $_FILES['tfoto']['error'] !== UPLOAD_ERR_NO_FILE) {
-        if (uploadFoto('tfoto', BASE_DIR . '/uploads', $foto_baru_nama_file)) {
-            hapusFoto($nis_identifikasi, $conn);
+        if (uploadFoto('tfoto', $upload_dir_path, $foto_baru_nama_file)) {
+            hapusFoto($nis_identifikasi, $conn, BASE_DIR); // Kirim BASE_DIR ke fungsi hapusFoto
             $fields_to_update[] = "foto=?";
             $types .= "s";
             $params[] = $foto_baru_nama_file;
@@ -216,11 +223,25 @@ if (isset($_POST['bubah'])) {
 if (isset($_POST['bhapus'], $_POST['nis'])) {
     $nis_to_delete = trim($_POST['nis']);
 
-    hapusFoto($nis_to_delete, $conn);
+    // --- LANGKAH PENTING: HAPUS DATA TERKAIT DI TABEL ANAK (TAHFIDZ) DULU ---
+    $stmt_delete_tahfidz = mysqli_prepare($conn, "DELETE FROM tahfidz WHERE nis = ?");
+    if ($stmt_delete_tahfidz === false) {
+        redirect("Gagal mempersiapkan query hapus data tahfidz: " . mysqli_error($conn), 'index.php');
+    }
+    mysqli_stmt_bind_param($stmt_delete_tahfidz, "s", $nis_to_delete);
+    if (!mysqli_stmt_execute($stmt_delete_tahfidz)) {
+        redirect("Hapus data Gagal! Error menghapus data tahfidz: " . mysqli_stmt_error($stmt_delete_tahfidz), 'index.php');
+    }
+    mysqli_stmt_close($stmt_delete_tahfidz);
+    // -----------------------------------------------------------------------
 
+    // Kemudian, hapus file foto lama
+    hapusFoto($nis_to_delete, $conn, BASE_DIR); // Kirim BASE_DIR ke fungsi hapusFoto
+
+    // Terakhir, hapus data dari tabel parent (users)
     $stmt = mysqli_prepare($conn, "DELETE FROM users WHERE nis=?");
     if ($stmt === false) {
-        redirect("Gagal mempersiapkan query hapus: " . mysqli_error($conn), 'index.php');
+        redirect("Gagal mempersiapkan query hapus user: " . mysqli_error($conn), 'index.php');
     }
     mysqli_stmt_bind_param($stmt, "s", $nis_to_delete);
 
@@ -228,7 +249,7 @@ if (isset($_POST['bhapus'], $_POST['nis'])) {
         if (mysqli_stmt_affected_rows($stmt) > 0) {
             redirect("Hapus data Sukses!", 'index.php');
         } else {
-            redirect("Hapus data gagal! Data tidak ditemukan.", 'index.php');
+            redirect("Hapus data gagal! Data user tidak ditemukan.", 'index.php');
         }
     } else {
         redirect("Hapus data Gagal! Error: " . mysqli_stmt_error($stmt), 'index.php');

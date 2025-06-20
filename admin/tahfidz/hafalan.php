@@ -38,8 +38,7 @@ if (isset($_POST['hsimpan'])) {
     $nis = trim($_POST['thnis']);
     $tanggal = trim($_POST['thtanggal']);
     // Kita tidak akan menggunakan $_POST['thnama'], $_POST['thkelas'], $_POST['thkelamin'] langsung
-    // untuk INSERT karena kita akan mengambilnya dari tabel users untuk konsistensi.
-    // Tapi kita perlu variabel ini untuk mengisi parameter bind_param jika kolomnya masih ada di tahfidz.
+    // untuk INSERT karena kita akan mengambilnya dari tabel users untuk konsistensi pada saat TAMBAH.
     $nama = '';
     $kelas = '';
     $jeniskelamin = '';
@@ -49,6 +48,7 @@ if (isset($_POST['hsimpan'])) {
     $juz = trim($_POST['thjuz']);
 
     // --- Validasi NIS di tabel users SEBELUM INSERT ke tahfidz ---
+    // Logika ini tetap dipertahankan untuk operasi tambah data, agar data santri valid.
     $stmt_check_nis = mysqli_prepare($conn, "SELECT nama_lengkap, kelas, jenis_kelamin FROM users WHERE nis = ?");
     if ($stmt_check_nis === false) {
         redirect("Gagal menyiapkan query cek NIS: " . mysqli_error($conn));
@@ -84,10 +84,9 @@ if (isset($_POST['hsimpan'])) {
     mysqli_stmt_bind_param($stmt, "ssssssss", $nis, $tanggal, $nama, $kelas, $jeniskelamin, $jenistahfidz, $halaman, $juz);
 
     if (mysqli_stmt_execute($stmt)) {
-        redirect("Data tahfidz berhasil disimpan!"); // Mengganti "Ubah data Sukses!" menjadi pesan yang lebih sesuai
+        redirect("Data tahfidz berhasil disimpan!");
     } else {
-        // Error ini hanya akan muncul jika ada masalah lain dengan database (bukan karena FK)
-        redirect("Error! Data tahfidz berhasil disimpan!" . mysqli_error($conn));
+        redirect("Error! Data tahfidz gagal disimpan!" . mysqli_error($conn));
     }
     mysqli_stmt_close($stmt);
 }
@@ -96,15 +95,19 @@ if (isset($_POST['hsimpan'])) {
 if (isset($_POST['hubah'])) {
     $id = trim($_POST['thid']);
     $tanggal = trim($_POST['thtanggal']);
-    // Kita perlu mendapatkan NIS dari catatan tahfidz yang akan diupdate terlebih dahulu
-    // untuk kemudian mengambil info nama, kelas, jenis_kelamin terbaru dari tabel users.
+
+    // --- PERUBAHAN PENTING DI SINI: Ambil nilai nama, kelas, dan jenis_kelamin langsung dari input form modal ($_POST) ---
+    $nama = trim($_POST['thnama']);
+    $kelas = trim($_POST['thkelas']);
+    $jeniskelamin = trim($_POST['thkelamin']);
+    // --- AKHIR PERUBAHAN PENTING ---
 
     $jenistahfidz = trim($_POST['thtahfidz']);
     $halaman = trim($_POST['thhalaman']);
     $juz = trim($_POST['thjuz']);
 
-    // --- START: Logic untuk mendapatkan NIS dari catatan tahfidz yang akan diupdate
-    // Lalu, ambil nama, kelas, jenis_kelamin terbaru dari tabel users berdasarkan NIS tersebut
+    // --- BAGIAN INI DIHAPUS/DIKOMENTARI KARENA TIDAK DIGUNAKAN LAGI UNTUK UPDATE NAMA/KELAS/JENIS_KELAMIN ---
+    /*
     $nama_santri_updated = '';
     $kelas_santri_updated = '';
     $jenis_kelamin_santri_updated = '';
@@ -135,7 +138,6 @@ if (isset($_POST['hubah'])) {
             $jenis_kelamin_santri_updated = $user_info_for_update['jenis_kelamin'];
         } else {
             // Ini seharusnya tidak terjadi jika Foreign Key berfungsi dengan baik
-            // Namun, jika terjadi, berarti ada data inkonsisten di DB Anda
             redirect("NIS terkait dengan catatan tahfidz ini tidak ditemukan di daftar santri utama. Data mungkin tidak konsisten.");
         }
         mysqli_stmt_close($stmt_get_user_info_for_update);
@@ -143,22 +145,24 @@ if (isset($_POST['hubah'])) {
         redirect("Catatan tahfidz dengan ID '$id' tidak ditemukan.", 'tahfidz.php');
     }
     mysqli_stmt_close($stmt_get_tahfidz_nis);
-    // --- END: Logic untuk mendapatkan NIS dan info santri terbaru untuk update
+    */
+    // --- AKHIR BAGIAN YANG DIHAPUS/DIKOMENTARI ---
 
-    // Query UPDATE. Kolom 'nama', 'kelas', 'jenis_kelamin' di-update dengan data terbaru dari tabel 'users'
-    // berdasarkan NIS yang terkait dengan tahfidz_id tersebut.
+    // Query UPDATE. Kolom 'nama', 'kelas', 'jenis_kelamin' sekarang akan di-update DARI INPUT FORM
     $stmt = mysqli_prepare($conn, "UPDATE tahfidz SET tanggal=?, nama=?, kelas=?, jenis_kelamin=?, jenis_tahfidz=?, halaman=?, juz=? WHERE tahfidz_id=?");
 
     if ($stmt === false) {
         redirect("Failed to prepare update query: " . mysqli_error($conn));
     }
 
-    mysqli_stmt_bind_param($stmt, "sssssssi", $tanggal, $nama_santri_updated, $kelas_santri_updated, $jenis_kelamin_santri_updated, $jenistahfidz, $halaman, $juz, $id);
+    // Pastikan urutan parameter di bind_param sesuai dengan urutan di query UPDATE
+    // Menggunakan $nama, $kelas, $jeniskelamin yang baru diambil dari $_POST
+    mysqli_stmt_bind_param($stmt, "sssssssi", $tanggal, $nama, $kelas, $jeniskelamin, $jenistahfidz, $halaman, $juz, $id);
 
     if (mysqli_stmt_execute($stmt)) {
         redirect("Data tahfidz berhasil diperbarui!");
     } else {
-        redirect("Error! Data tahfidz gagal diperbarui!" . mysqli_error($conn));
+        redirect("Error! Data tahfidz gagal diperbarui! " . mysqli_error($conn));
     }
     mysqli_stmt_close($stmt);
 }

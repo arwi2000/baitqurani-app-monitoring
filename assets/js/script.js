@@ -44,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clickOutsideSidebar =
       !sidebar.contains(e.target) &&
       !hamburger.contains(e.target) &&
-      // Check if click is on overlay itself, or an element not part of dropdown
-      !overlay.contains(e.target) &&
+      !overlay.contains(e.target) && // Check if click is on overlay itself
       !e.target.closest('.tahfidz-dropdown'); // Exclude clicks inside dropdowns
 
     if (isOpen() && clickOutsideSidebar) {
@@ -99,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
        * Includes destruction before initialization to prevent reinitialization errors.
        * @param {string} tableId The ID of the HTML table (e.g., '#data-santri').
        * @param {number} pageLength The number of rows per page.
+       * @returns {object} The DataTables instance.
        */
       function initializeDataTable(tableId, pageLength) {
         // Check if DataTables is already initialized on this table
@@ -135,16 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Initialize each table present in the application
-      // Pastikan Anda hanya menginisialisasi tabel yang ada di halaman saat ini
-      // If #data-santri, #data-program, #data-tahfidz are not on this specific page,
-      // these lines might cause warnings but won't break anything.
-      // You might want to wrap them in checks like `if ($('#data-santri').length) { ... }`
-      initializeDataTable('#data-santri', 10);
-      initializeDataTable('#data-program', 6);
-      initializeDataTable('#data-tahfidz', 10);
+      // Only initialize if the element exists on the page
+      if ($('#data-santri').length) {
+        initializeDataTable('#data-santri', 10);
+      }
+      if ($('#data-program').length) {
+        initializeDataTable('#data-program', 6);
+      }
+      if ($('#data-tahfidz').length) {
+        initializeDataTable('#data-tahfidz', 10);
+      }
+      if ($('#data-profil').length) {
+        initializeDataTable('#data-profil', 6);
+      }
 
       // Inisialisasi DataTables untuk tabel gabungan (rekap)
-      dataTableGabungan = initializeDataTable('#data-gabungan', 6);
+      if ($('#data-gabungan').length) {
+        dataTableGabungan = initializeDataTable('#data-gabungan', 6);
+      }
+
 
       // ============================================================================================================
       // Custom Filters for #data-gabungan table
@@ -152,6 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Fungsi untuk menerapkan semua filter
       function applyFilters() {
+        // Pastikan dataTableGabungan sudah terinisialisasi sebelum mencoba menggunakannya
+        if (!dataTableGabungan) {
+          console.warn("dataTableGabungan is not initialized. Filter functions will not work.");
+          return;
+        }
+
         const filterKelas = $('#filterKelas').val();
         const filterJenisKelamin = $('#filterJenisKelamin').val();
         const filterTanggal = $('#filterTanggal').val();
@@ -178,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (settings.nTable.id !== 'data-gabungan') {
               return true;
             }
+            // Membandingkan nilai dari kolom tabel (Laki-laki/Perempuan) dengan nilai filter dropdown
             return data[4] === filterJenisKelamin; // Kolom "Jenis Kelamin"
           });
         }
@@ -202,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tableDate = data[5]; // Tanggal dari kolom tabel "Tanggal Tahfidz"
             // Jika tanggal di tabel "Belum Ada", jangan difilter
             if (tableDate === 'Belum Ada') {
-              return false;
+              return false; // Jangan tampilkan baris dengan tanggal "Belum Ada" jika ada filter tanggal
             }
             return tableDate === filterTanggal;
           });
@@ -230,11 +246,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // PENTING: Panggil applyFilters() sekali saat halaman dimuat
       // untuk memastikan filter awal (kosong) diterapkan dan DataTables berfungsi.
-      applyFilters();
+      // Hanya panggil jika tabel #data-gabungan ada
+      if ($('#data-gabungan').length) {
+        applyFilters();
+      }
 
 
       // ============================================================================================================
-      // Modal Form Reset Functionality (unchanged from previous versions)
+      // Modal Form Reset Functionality
       // ============================================================================================================
 
       /**
@@ -274,6 +293,12 @@ document.addEventListener('DOMContentLoaded', () => {
         radios.forEach(radio => {
           radio.checked = false;
         });
+
+        // Clear specific hidden inputs for Tahfidz modal if they exist
+        const hiddenKelas = modalElement.querySelector('#hidden_tambah_kelas');
+        const hiddenJenisKelamin = modalElement.querySelector('#hidden_tambah_jenis_kelamin');
+        if (hiddenKelas) hiddenKelas.value = '';
+        if (hiddenJenisKelamin) hiddenJenisKelamin.value = '';
       }
 
       // Attach event listeners to reset "Tambah" modals when they are hidden

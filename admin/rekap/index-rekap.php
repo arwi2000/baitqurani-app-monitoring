@@ -64,7 +64,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] !== 'admin') {
                         <div class="row g-2">
                             <div class="col-md-3 col-sm-6">
                                 <label for="filterKelas" class="form-label visually-hidden">Filter Kelas</label>
-                                <select class="form-select **form-select-sm**" id="filterKelas">
+                                <select class="form-select form-select-sm" id="filterKelas">
                                     <option value="">Pilih Kelas</option>
                                     <option value="Kelas 7">Kelas 7</option>
                                     <option value="Kelas 8">Kelas 8</option>
@@ -76,7 +76,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] !== 'admin') {
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label for="filterJenisKelamin" class="form-label visually-hidden">Filter Jenis Kelamin</label>
-                                <select class="form-select **form-select-sm**" id="filterJenisKelamin">
+                                <select class="form-select form-select-sm" id="filterJenisKelamin">
                                     <option value="">Pilih Jenis Kelamin</option>
                                     <option value="Laki-laki">Laki-laki</option>
                                     <option value="Perempuan">Perempuan</option>
@@ -84,7 +84,7 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] !== 'admin') {
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label for="filterJenisTahfidz" class="form-label visually-hidden">Filter Jenis Tahfidz</label>
-                                <select class="form-select **form-select-sm**" id="filterJenisTahfidz">
+                                <select class="form-select form-select-sm" id="filterJenisTahfidz">
                                     <option value="">Pilih Jenis Tahfidz</option>
                                     <option value="Ziyadah">Ziyadah</option>
                                     <option value="Muroja'ah">Muroja'ah</option>
@@ -93,16 +93,16 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] !== 'admin') {
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <label for="filterTanggal" class="form-label visually-hidden">Filter Tanggal</label>
-                                <input type="date" class="form-control **form-control-sm**" id="filterTanggal">
+                                <input type="date" class="form-control form-control-sm" id="filterTanggal">
                             </div>
                             <div class="col-12 mt-2">
-                                <button id="resetFilters" class="btn btn-secondary **btn-sm** w-100">Reset Filter</button>
+                                <button id="resetFilters" class="btn btn-secondary btn-sm w-100">Reset Filter</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end mb-3">
-                        <button id="exportExcelBtn" class="btn btn-success **btn-sm**">
+                        <button id="exportExcelBtn" class="btn btn-success btn-sm">
                             Export Data ke Excel
                         </button>
                     </div>
@@ -125,47 +125,26 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] !== 'admin') {
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $query_gabungan = "SELECT
-                                                        u.nis,
-                                                        u.nama_lengkap,
-                                                        u.kelas,
-                                                        u.jenis_kelamin,
-                                                        t.tanggal,
-                                                        t.jenis_tahfidz,
-                                                        t.halaman,
-                                                        t.juz
-                                                    FROM
-                                                        users AS u
-                                                    LEFT JOIN
-                                                        tahfidz AS t ON u.nis = t.nis
-                                                    ORDER BY u.nis ASC, t.tanggal DESC";
-
-                                $result_gabungan = mysqli_query($conn, $query_gabungan);
-
-                                if (!$result_gabungan) {
-                                    echo "<tr><td colspan='9'>Error mengambil data: " . mysqli_error($conn) . "</td></tr>";
-                                } else {
-                                    if (mysqli_num_rows($result_gabungan) > 0) {
-                                        while ($data_gabungan = mysqli_fetch_assoc($result_gabungan)) {
+                                // Fetch all tahfidz data from database
+                                // Anda mungkin ingin JOIN dengan tabel santri di sini jika kolom 'nama', 'kelas', 'jenis_kelamin' tidak ada di tabel 'tahfidz'
+                                // Tapi berdasarkan kode sebelumnya, sepertinya kolom ini ada di tabel tahfidz.
+                                $list = mysqli_query($conn, "SELECT * FROM tahfidz ORDER BY tanggal DESC");
+                                while ($data = mysqli_fetch_array($list)) :
+                                    // Konversi 'l'/'p' menjadi 'Laki-laki'/'Perempuan' untuk tampilan
+                                    $jenis_kelamin_display = ($data['jenis_kelamin'] == 'l') ? 'Laki-laki' : (($data['jenis_kelamin'] == 'p') ? 'Perempuan' : htmlspecialchars($data['jenis_kelamin']));
                                 ?>
-                                            <tr>
-                                                <td><?= $no++ ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['nis']) ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['nama_lengkap']) ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['kelas']) ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['jenis_kelamin']) ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['tanggal'] ?? 'Belum Ada') ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['jenis_tahfidz'] ?? 'Belum Ada') ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['halaman'] ?? 'Belum Ada') ?></td>
-                                                <td><?= htmlspecialchars($data_gabungan['juz'] ?? 'Belum Ada') ?></td>
-                                            </tr>
-                                <?php
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='9'>Tidak ada data santri atau tahfidz ditemukan.</td></tr>";
-                                    }
-                                }
-                                ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= htmlspecialchars($data['nis']) ?></td>
+                                        <td><?= htmlspecialchars($data['nama']) ?></td>
+                                        <td><?= htmlspecialchars($data['kelas']) ?></td>
+                                        <td><?= $jenis_kelamin_display ?></td>
+                                        <td><?= htmlspecialchars($data['tanggal']) ?></td>
+                                        <td><?= htmlspecialchars($data['jenis_tahfidz']) ?></td>
+                                        <td><?= htmlspecialchars($data['halaman']) ?></td>
+                                        <td><?= htmlspecialchars($data['juz']) ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
                             </tbody>
                         </table>
                     </div>
@@ -198,7 +177,12 @@ if (!isset($_SESSION['nis']) || $_SESSION['role'] !== 'admin') {
                     exportUrl += `kelas=${encodeURIComponent(filterKelas)}&`;
                 }
                 if (filterJenisKelamin) {
-                    exportUrl += `jenis_kelamin=${encodeURIComponent(filterJenisKelamin)}&`;
+                    // Saat mengirim ke export_excel, kirim nilai 'l' atau 'p' jika filter aktif
+                    // Asumsi: filterJenisKelamin akan bernilai 'Laki-laki' atau 'Perempuan'
+                    const jenisKelaminExport = (filterJenisKelamin === 'Laki-laki') ? 'l' : (filterJenisKelamin === 'Perempuan' ? 'p' : '');
+                    if (jenisKelaminExport) {
+                        exportUrl += `jenis_kelamin=${encodeURIComponent(jenisKelaminExport)}&`;
+                    }
                 }
                 if (filterJenisTahfidz) {
                     exportUrl += `jenis_tahfidz=${encodeURIComponent(filterJenisTahfidz)}&`;
